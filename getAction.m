@@ -1,0 +1,32 @@
+function action = getAction(state,params)
+% choose action that will shift generation to satisfy demand
+% currently chooses according to cheapest at each stage, and shift max
+% possible generation
+%define_constants;
+run('get_global_constants.m')
+action.dg=zeros(params.ng,1);
+action.wind_curtailment = false;
+
+%treat decommited generators as altered, to leave them alone
+altered_gen = find(1-state.commited_generators);
+
+if(state.b > 0) %allow action only if budget left.
+    %we do not deal with budget that is not enough for a specific action
+    needed_g = sum(state.d - state.w) - sum(state.g);
+    min_gen = params.mpcase.gen(:,PMIN);
+    tot_min_gen = sum(min_gen);
+    %% start by curtailing wind if needed - w/ current DA decommitment this is disabled
+%     [action,needed_g] =curtail_wind(state,action,needed_g);
+    
+    %% switch off generators if needed - w/ current DA decommitment this is disabled
+%   [needed_g,altered_gen,state,action] = rt_decommitment(state,tot_min_gen,altered_gen,min_gen,action,params);
+     
+    %% redispatch
+    [action] = redispatch(state,altered_gen,needed_g,action,params);
+    
+    %% summary
+    %usually happens when effective demand is very small, positive but smaller than minimal possible production
+    if(length(altered_gen)==params.ng && needed_g~=0)
+        display('Couldnt find suitable action!');
+    end
+end
