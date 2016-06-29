@@ -6,15 +6,14 @@ da_market_null = nan(params.ng,params.da_horizon);
 s = initializeState(da_market_null,params);
 theta_length = length(getDWFeatures(s,params,da_market_null));
 phi_hist_post = zeros(theta_length,N_stpes,length(s_da_0_cell));
-
 %% obtain samples for estimating RT theta given DA policy theta_pi
 for i_s0 = 1:length(s_da_0_cell)
     s_da_td = s_da_0_cell{i_s0};
-    %% value iteration initialization
+    %% TD(0) initialization
     theta_post = zeros(theta_length,1);
     c=0;
     td=0;
-    %% run value iteration
+    %% run TD(0)
     for i_episode=1:params.N_episode
         display(['Episode ',num2str(i_episode)]);tic;
         s_t = initializeState(da_market_null,params);
@@ -24,27 +23,21 @@ for i_s0 = 1:length(s_da_0_cell)
             if(mod(s_t.t,24)==1) %beginning of the day
                 td=td+1;
                 da_action = get_da_action(psi,s_da_td,params);
-                da_action'
+                %                 da_action'
                 s_t = update_commited_generators(da_action,s_t);
-%                 s_t = update_daily_prediction(s_da_td,s_t,params);
-                if(strcmp(params.caseName,'case96'))
-                    [da_market,voltage_setpoints] = getDailyGenerationPrediction_opf(da_action,s_da_td,params);
-                else
-                    voltage_setpoints=[];
-                    da_market = getDailyGenerationPrediction(da_action,s_da_td,params);
-                end
+                [da_market,voltage_setpoints] = get_daily_generation_prediction(da_action,s_da_td,params);
                 s_t.g = da_market(:,1); %first hour updated here, all others in 'transition'
             end
             %% SARSA
             c = c+1;
             
             %--take action--
-            a_t = getAction(s_t,params);
+            a_t = get_action(s_t,params);
             
             %--observe reward--
-            s_t_post = getPostState(s_t,a_t,params); % update budget
+            s_t_post = get_post_state(s_t,a_t,params);
             Wc_t = drawContingency(s_t_post,params);
-            r_t_post = calcReliability(s_t_post, Wc_t,params,voltage_setpoints) %after action and contingency
+            r_t_post = calc_reliability(s_t_post, Wc_t,params,voltage_setpoints); %after action and contingency
             %             r_t_post = max(r_t_post,0.1);
             
             %--get next state--
