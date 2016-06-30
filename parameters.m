@@ -2,7 +2,7 @@
 
 %% case params
 if(sum(strcmp(caseName,{'case5','case9','case14','case24','case24_ieee_rts','case96'}))>0)
-    caseParams=getSpecificCaseParams(caseName);
+    caseParams=getSpecificCaseParams(caseName,config.RTS96_filePath);
 else
     caseParams.windBuses=[5,6];
     caseParams.windHourlyForcast = getWindHourlyForcast(caseParams.windBuses);

@@ -1,5 +1,5 @@
 %% initialize program
-config
+configuration
 set_global_constants()
 run('get_global_constants.m')
 prefix_num = 1;
@@ -10,7 +10,7 @@ prefix_num = 1;
 jobArgs = set_job_args(prefix_num,config);
 %% set test case params
 caseName = 'case96'; %case5,case9,case14,case24
-params=get_testCase_params(caseName);
+params=get_testCase_params(caseName,config);
 params.action_set = generate_da_action_set(params);
 s_da_0_cell = generate_s_da_0_set(params);
 %% meta-optimizer iterations

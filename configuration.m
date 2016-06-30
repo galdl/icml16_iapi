@@ -8,14 +8,14 @@ config.remote_cluster = true;
 config.LOCAL_DIR_ROOT  = '~/mount/ICML16/';
 config.JOB_DATA_FILENAME = 'psi_content';
 config.JOB_OUTPUT_FILENAME = [config.run_mode,'-job_output.mat'];
-
+config.RTS96_filePath = '/matpower_cases/ieee_RTS96_UW';
 %% Remote paths - on the server running the jobs 
 % (setting whether such server is used is done with 'remote_cluster' variable)
 config.REMOTE_DIR_ROOT = '/u/gald/ICML16/';
 
 % relative dir is shared among the local and remote dirs. 
-config.RELATIVE_DIR_OPTIMIZE    = 'proxy_mdp_latest/saved_runs/Optimize/';
-config.RELATIVE_DIR_COMPARE = 'proxy_mdp_latest/saved_runs/Compare/';
+config.RELATIVE_DIR_OPTIMIZE    = 'icml16_iapi/output/saved_runs/Optimize/';
+config.RELATIVE_DIR_COMPARE = 'icml16_iapi/output/saved_runs/Compare/';
 
 config.JOB_DIRNAME_PREFIX = 'job_data_';
 config.CLUSTER_OUTPUT_DIRNAME = 'output';

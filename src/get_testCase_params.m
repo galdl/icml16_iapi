@@ -1,4 +1,4 @@
-function [ params ] = get_testCase_params( caseName )
+function [ params ] = get_testCase_params( caseName , config )
 run('get_global_constants.m')
 %need matpower for that
 funcHandle=str2func(caseName);

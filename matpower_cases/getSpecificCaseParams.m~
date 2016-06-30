@@ -1,4 +1,4 @@
-function [ caseParams ] = getSpecificCaseParams( caseName , RTS96_filePath )
+function [ caseParams ] = getSpecificCaseParams( caseName , RTS96_path )
 
 switch caseName
     case 'case5'
@@ -38,7 +38,7 @@ switch caseName
         windScaleRatio=15;
         loads=peakHourLoads(1:24); %num of buses in this case
     case 'case96'
-        load(RTS96_filePath);
+        load 'Cases/ieee_RTS96_UW';
         windBuses = 1:9;
         windScaleRatio=15;
         generatorTypeVector=generatorTypes';
