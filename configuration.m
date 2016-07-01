@@ -2,10 +2,10 @@
 
 % set run mode - optimize and find optimal plan, or compare to other
 %algorithms
-config.run_mode = 'optimize'; %'compare'
-config.remote_cluster = true;
+config.run_mode = 'optimize'; %'optimize','compare'
+config.remote_cluster = false; %true,false
 %% Local paths - on the machine running main
-config.LOCAL_DIR_ROOT  = '~/mount/ICML16/';
+config.LOCAL_DIR_ROOT  = '~/Dropbox (MLGroup)/Asset Management/ICML16/Code/icml16_iapi/'; %'~/mount/ICML16/'
 config.JOB_DATA_FILENAME = 'psi_content';
 config.JOB_OUTPUT_FILENAME = [config.run_mode,'-job_output.mat'];
 config.RTS96_filePath = '/matpower_cases/ieee_RTS96_UW';
@@ -14,8 +14,8 @@ config.RTS96_filePath = '/matpower_cases/ieee_RTS96_UW';
 config.REMOTE_DIR_ROOT = '/u/gald/ICML16/';
 
 % relative dir is shared among the local and remote dirs. 
-config.RELATIVE_DIR_OPTIMIZE    = 'icml16_iapi/output/saved_runs/Optimize/';
-config.RELATIVE_DIR_COMPARE = 'icml16_iapi/output/saved_runs/Compare/';
+config.RELATIVE_DIR_OPTIMIZE    = 'output/saved_runs/Optimize/';
+config.RELATIVE_DIR_COMPARE = 'output/saved_runs/Compare/';
 
 config.JOB_DIRNAME_PREFIX = 'job_data_';
 config.CLUSTER_OUTPUT_DIRNAME = 'output';

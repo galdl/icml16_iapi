@@ -6,7 +6,12 @@ function [job_dirname_prefix,full_localRun_dir,job_data_filename,job_output_file
 % algorithms from the cluster's point of view
 
 local_dir_root  = config.LOCAL_DIR_ROOT;
-remote_dir_root = config.REMOTE_DIR_ROOT;
+
+if(config.remote_cluster)
+    remote_dir_root = config.REMOTE_DIR_ROOT;
+else
+    remote_dir_root  = config.LOCAL_DIR_ROOT;
+end
 
 if (strcmp(config.run_mode,'optimize'))
     relative_dir = config.RELATIVE_DIR_OPTIMIZE;
@@ -22,6 +27,8 @@ if(isempty(dir(full_localRun_dir)))
 end
 
 full_remoteRun_dir = [remote_dir_root,relative_dir,run_dir];
+
+full_tempFiles_dir = '';
 if(config.remote_cluster && isempty(dir(full_remoteRun_dir)))
     mkdir(full_localRun_dir,config.CLUSTER_OUTPUT_DIRNAME);
     mkdir(full_localRun_dir,config.CLUSTER_ERROR_DIRNAME);

@@ -1,4 +1,5 @@
 %% initialize program
+warning off
 configuration
 set_global_constants()
 run('get_global_constants.m')
@@ -28,8 +29,10 @@ top_psi = get_psi_initial(s_da_0_cell,params,N_jobs);
 CE_stats = cell(3,N_IAPI);
 N_CE_inner=ceil(N_jobs/maxConcurrentJobs);
 %% start by killing all current jobs
-killRemainingJobs(jobArgs);
-pause(3);
+if(config.remote_cluster)
+    killRemainingJobs(jobArgs);
+    pause(3);
+end
 %% optimization iterations - each w/ multiple solutions (N_psi)
 while(i_IAPI<=N_IAPI) % && ~convergenceObtained(p,epsilon)
     try
@@ -56,7 +59,14 @@ while(i_IAPI<=N_IAPI) % && ~convergenceObtained(p,epsilon)
                     perparePsiDir(localIterDir,remoteIterDir,i_psi,X,s_da_0_cell,job_data_filename,job_dirname_prefix,params);
                 [funcArgs,jobArgs]=...
                     perpareJobArgs(i_psi,i_IAPI,localPsiDir,argContentFilename,remotePsiDir,jobArgs);
-                sendJob('evaluate_theta_job',funcArgs,jobArgs);
+                if(config.remote_cluster)
+                    sendJob('evaluate_theta_job',funcArgs,jobArgs);
+                else
+                    loaded_arguments =load([localPsiDir,'/',argContentFilename]);
+                    [theta,phi_hist] = evaluate_theta_pi(loaded_arguments.psi,loaded_arguments.s_da_0_cell,loaded_arguments.params);
+                    save([localPsiDir , '/',config.JOB_OUTPUT_FILENAME'],'theta','phi_hist');
+                end
+
             end
             mostFinished=0;
             c=1;
