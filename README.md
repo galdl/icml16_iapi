@@ -4,7 +4,7 @@ Implementation of the IAPI algorithm and a power-system real-time simulator, as 
 31/8/16 update: 
 - The code should be able to run independently on any machine with matlab. 
 - Setting remote_cluster=false (default) in configuration.m will run everything locally. 
-- Feel free to comment with requests/questions/bug reports. I'm highly available for that.
+- Feel free to comment in the issues section, with requests/questions/bug reports. I'm highly available for that.
 
 
 27/6/16 update: 
