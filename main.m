@@ -64,7 +64,7 @@ while(i_IAPI<=N_IAPI) % && ~convergenceObtained(p,epsilon)
                 else
                     loaded_arguments =load([localPsiDir,'/',argContentFilename]);
                     [theta,phi_hist] = evaluate_theta_pi(loaded_arguments.psi,loaded_arguments.s_da_0_cell,loaded_arguments.params);
-                    save([localPsiDir , '/',config.JOB_OUTPUT_FILENAME'],'theta','phi_hist');
+                    save([localPsiDir , '/',config.JOB_OUTPUT_FILENAME],'theta','phi_hist');
                 end
 
             end

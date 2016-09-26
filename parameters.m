@@ -64,10 +64,10 @@ params.dev_d_vec = linspace(-0.02,0.02,10);
 params.N_s_da_0 = 5;
 %% RT simulation length params
 if(strcmp('case24_ieee_rts',params.caseName))
-    params.N_episode = 2; %10
+    params.N_episode = 1; %2,10
 elseif(strcmp('case96',params.caseName))
-    params.N_episode = 5; %10
+    params.N_episode = 1; %5,10
 else
     params.N_episode = 1;
 end
-params.num_of_days=3; %3
+params.num_of_days=1; %1,3
